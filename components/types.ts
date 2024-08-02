@@ -15,8 +15,8 @@ export type User = {
 }
 
 export type UserDB = {
-  id: string;
-  created_at: string;
-  name: string;
+  id: string
+  created_at: string
+  name: string
   email: string
 }

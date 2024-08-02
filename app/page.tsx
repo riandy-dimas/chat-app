@@ -1,113 +1,107 @@
-import Image from "next/image";
+import ChatBox from "@/components/chat-box";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { formatISO, sub } from "date-fns";
+
+const dummyUsers = [
+  {
+    id: "123qwe",
+    name: "John Cena",
+    email: "john.cena@mail.com",
+    img: "https://i.pravatar.cc/60?u=john.cena@mail.com"
+  },
+  {
+    id: "456rty",
+    name: "Pantau Cena",
+    email: "pantau.cena@mail.com",
+    img: "https://i.pravatar.cc/60?u=pantau.cena@mail.com"
+  },
+  {
+    id: "789qwe",
+    name: "Agung Gumelar",
+    email: "agung.gumelar@mail.com",
+    img: "https://i.pravatar.cc/60?u=agung.gumelar@mail.com"
+  },
+  {
+    id: "9087j",
+    name: "Kun Kun Cena",
+    email: "kun.cena@mail.com",
+    img: "https://i.pravatar.cc/60?u=kun.cena@mail.com"
+  }
+]
+
+const dummyMessages = [
+  {
+    id: '1',
+    userId: '123qwe',
+    message: 'Lorem ipsum',
+    timestamp: formatISO(sub(new Date().toISOString(), { hours: 2 })),
+  },
+  {
+    id: '2',
+    userId: '123qwe',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    timestamp: formatISO(sub(new Date().toISOString(), { hours: 2 })),
+  },
+  {
+    id: '3',
+    userId: '9087j',
+    message: 'Siang makan nasi, kalo malam minum susu!',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 33 })),
+  },
+  {
+    id: '4',
+    userId: '789qwe',
+    message: 'Halo halo bandung',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 18 })),
+  },
+  {
+    id: '5',
+    userId: '789qwe',
+    message: 'Ibu kota periangan',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 7 })),
+  },
+  {
+    id: '6',
+    userId: '9087j',
+    message: 'Sudah.. lama beta, tidak berjumpa dengan kau',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 6 })),
+  },
+  {
+    id: '7',
+    userId: '456rty',
+    message: 'Mari bung rebut kembali.',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 5 })),
+  },
+  {
+    id: '8',
+    userId: '123qwe',
+    message: 'Ogah.',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 2 })),
+  },
+  {
+    id: '9',
+    userId: '9087j',
+    message: 'y.',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 0 })),
+  },
+  {
+    id: '10',
+    userId: '9087j',
+    message: 'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
+    timestamp: formatISO(sub(new Date().toISOString(), { minutes: 0 })),
+  },
+]
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <TooltipProvider>
+      <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-blue-900">
+        <ChatBox
+          users={dummyUsers}
+          messages={dummyMessages}
+          currentUserId="9087j"
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </main>
+    </TooltipProvider>
   );
 }

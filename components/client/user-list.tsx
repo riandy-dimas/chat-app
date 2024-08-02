@@ -7,12 +7,13 @@ import UserItem from '@/components/user-item'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '../ui/scroll-area'
 import { User } from '../types'
-import { useUserStore } from './store'
+import { useChannelStore, useUserStore } from './store'
 
 const UserList = () => {
   const [isLoading, setLoading] = useState(true)
   const [users, setUsers] = useState<User[]>([])
   const currentUsr = useUserStore((state) => state.user)
+  const setChannel = useChannelStore((state) => state.setChannel)
 
   useEffect(() => {
     if (currentUsr?.uuid) {
@@ -24,6 +25,8 @@ const UserList = () => {
             }
           }
         })
+
+      setChannel(channel)
 
       channel.on('presence', { event: 'sync' }, () => {
         const presenceState = channel.presenceState();
@@ -42,8 +45,13 @@ const UserList = () => {
           channel.track(currentUsr);
         }
       });
+
+      return () => {
+        channel.unsubscribe();
+        setChannel(null);
+      };
     }
-  }, [currentUsr])
+  }, [currentUsr, setChannel])
 
   if (isLoading) {
     return (

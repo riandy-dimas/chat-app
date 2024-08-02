@@ -1,5 +1,7 @@
 export type Message = {
   id: string
+  name: string
+  email: string
   userId: string
   message: string
   timestamp: string

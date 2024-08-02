@@ -77,7 +77,6 @@ const UserList = () => {
             })
             break
         }
-        console.log({ payload })
       }).subscribe()
     
     return () => {

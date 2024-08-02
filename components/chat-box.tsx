@@ -7,20 +7,8 @@ import { SendHorizontal } from 'lucide-react'
 import { Separator } from './ui/separator'
 import UserItem from './user-item'
 import ChatBubble from './chat-bubble'
-
-type Message = {
-  id: string
-  userId: string
-  message: string
-  timestamp: string
-}
-
-type User = {
-  id: string
-  name: string
-  email: string
-  img?: string
-}
+import { Message, User } from './types'
+import UserList from './client/user-list'
 
 type ChatBoxProps = {
   currentUserId: string
@@ -45,19 +33,7 @@ const ChatBox = ({
   >
     <ResizablePanel defaultSize={35} minSize={25} maxSize={50}>
       <div className="h-full p-3 bg-blue-400 relative">
-        <div className="rounded-md border flex flex-col h-full bg-blue-50 p-3">
-          <UserItem {...currentUser} self />
-          <Separator className="my-2" />
-          <div className='h-full overflow-auto'>
-            <ScrollArea className="h-full flex flex-col gap-2 rounded-lg">
-              {
-                users
-                  .filter(({ id }) => id !== currentUserId)
-                  .map((props) => <UserItem key={props.id} {...props} />)
-              }
-            </ScrollArea>
-          </div>
-        </div>
+        <UserList />
       </div>
     </ResizablePanel>
     <ResizableHandle withHandle />

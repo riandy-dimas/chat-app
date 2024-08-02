@@ -5,7 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getInitials(fullName: string): string {
+export function getInitials(fullName?: string): string {
+  if (!fullName) return ''
+
   // Split the full name into an array of words
   const nameParts = fullName.split(' ');
 

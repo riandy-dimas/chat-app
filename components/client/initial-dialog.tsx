@@ -33,6 +33,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { MessagesSquare } from 'lucide-react'
 import { Button } from '../ui/button'
+import { useUserStore } from './store'
 
 export default function InitialDialog() {
   const [open, setOpen] = useState(true)
@@ -43,12 +44,13 @@ export default function InitialDialog() {
       email: "",
     },
   })
-
+  const setUser = useUserStore((state) => state.setUser)
   function onSubmit(values: z.infer<typeof formSchema>) {
-    sessionStorage.setItem('user-info', JSON.stringify({
+    setUser({
       ...values,
-      uuid: uuidv4()
-    }))
+      uuid: uuidv4(),
+      img: `https://i.pravatar.cc/60?u=${values.email}`
+    })
     setOpen(false)
   }
 

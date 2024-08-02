@@ -21,8 +21,8 @@ const ChatBox = ({
   users
 }: ChatBoxProps) => {
   const userObj = users
-    .reduce((result, {id, ...rest}) => {
-      return {...result, [id]: {...rest, id}}
+    .reduce((result, {uuid, ...rest}) => {
+      return {...result, [uuid]: {...rest, uuid}}
     }, {} as Record<string, User>)
   return (
     <>
@@ -47,7 +47,7 @@ const ChatBox = ({
                   timestamp,
                   userId
                 }) => {
-                  const { name, img, id } = userObj[userId]
+                  const { name, img, uuid } = userObj[userId]
                   return (
                     <ChatBubble
                       key={msgId}
@@ -55,7 +55,7 @@ const ChatBox = ({
                       timestamp={timestamp}
                       name={name}
                       img={img}
-                      self={currentUserId === id}
+                      self={currentUserId === uuid}
                     />
                   )
                 })

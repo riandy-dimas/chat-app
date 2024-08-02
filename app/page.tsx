@@ -4,25 +4,25 @@ import { formatISO, sub } from "date-fns";
 
 const dummyUsers = [
   {
-    id: "123qwe",
+    uuid: "123qwe",
     name: "John Cena",
     email: "john.cena@mail.com",
     img: "https://i.pravatar.cc/60?u=john.cena@mail.com"
   },
   {
-    id: "456rty",
+    uuid: "456rty",
     name: "Pantau Cena",
     email: "pantau.cena@mail.com",
     img: "https://i.pravatar.cc/60?u=pantau.cena@mail.com"
   },
   {
-    id: "789qwe",
+    uuid: "789qwe",
     name: "Agung Gumelar",
     email: "agung.gumelar@mail.com",
     img: "https://i.pravatar.cc/60?u=agung.gumelar@mail.com"
   },
   {
-    id: "9087j",
+    uuid: "9087j",
     name: "Kun Kun Cena",
     email: "kun.cena@mail.com",
     img: "https://i.pravatar.cc/60?u=kun.cena@mail.com"

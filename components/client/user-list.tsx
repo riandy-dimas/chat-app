@@ -6,83 +6,44 @@ import { set } from 'lodash'
 import UserItem from '@/components/user-item'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '../ui/scroll-area'
-import { User, UserDB } from '../types'
-import { REALTIME_LISTEN_TYPES, REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from '@supabase/supabase-js'
+import { User } from '../types'
+import { useUserStore } from './store'
 
 const UserList = () => {
   const [isLoading, setLoading] = useState(true)
   const [users, setUsers] = useState<User[]>([])
-  const currentUserId = "bddfe222-7d9b-4908-9e84-e032064ce7f6"
-
-  const userObj = users
-  .reduce((result, {id, ...rest}) => {
-    return {...result, [id]: {...rest, id}}
-  }, {} as Record<string, User>)
-  const currentUser = userObj[currentUserId]
-
-  const getInitialData = async () => {
-    setLoading(true)
-    const { data } = await supabase
-      .from('online-users')
-      .select()
-    setUsers(() => {
-      return data?.map((payload) => ({
-        email: payload.email,
-        id: payload.id,
-        name: payload.name,
-        img: `https://i.pravatar.cc/60?u=${payload.email}`
-      })) || []
-    })
-    setLoading(false)
-  }
+  const currentUsr = useUserStore((state) => state.user)
 
   useEffect(() => {
-    getInitialData()
-  }, [])
+    if (currentUsr?.uuid) {
+      const channel = supabase
+        .channel('chat__room', {
+          config: {
+            broadcast: {
+              self: true
+            }
+          }
+        })
 
-  useEffect(() => {
-    const channel = supabase
-      .channel("realtime-online-users")
-      .on<UserDB>(REALTIME_LISTEN_TYPES.POSTGRES_CHANGES, {
-        event: REALTIME_POSTGRES_CHANGES_LISTEN_EVENT.ALL,
-        schema: 'public',
-        table: 'online-users'
-      }, (payload) => {
-        switch (payload.eventType) {
-          case 'DELETE':
-            setUsers((state) => state.filter(({ id }) => id !== payload.old.id))
-            break
-          case 'INSERT':
-            setUsers((state) => [
-              ...state,
-              {
-                email: payload.new.email,
-                id: payload.new.id,
-                name: payload.new.name,
-                img: `https://i.pravatar.cc/60?u=${payload.new.email}`
-              }
-            ])
-            break
-          default:
-            setUsers((state) => {
-              const user: User = {
-                email: payload.new.email,
-                id: payload.new.id,
-                name: payload.new.name,
-                img: `https://i.pravatar.cc/60?u=${payload.new.email}`
-              }
-              const index = state.findIndex(({id}) => id === payload.new.id)
-              set(state, [index], user)
-              return state
-            })
-            break
+      channel.on('presence', { event: 'sync' }, () => {
+        const presenceState = channel.presenceState();
+        const users = Object.keys(presenceState)
+          .map((presenceId) => {
+              const presences = presenceState[presenceId] as unknown as User[];
+              return presences;
+          })
+          .flat();
+        setUsers(users)
+      })
+
+      channel.subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          setLoading(false)
+          channel.track(currentUsr);
         }
-      }).subscribe()
-    
-    return () => {
-      supabase.removeChannel(channel)
+      });
     }
-  }, [])
+  }, [currentUsr])
 
   if (isLoading) {
     return (
@@ -98,17 +59,17 @@ const UserList = () => {
 
   return (
     <div className="rounded-md border flex flex-col h-full bg-blue-50 p-3">
-      <UserItem {...currentUser} self />
+      <UserItem name={currentUsr?.name || ''} email={currentUsr?.email || ''} img={currentUsr?.img}  self />
       <Separator className="my-2" />
       <div className='h-full overflow-auto'>
         <ScrollArea className="h-full rounded-lg">
           {
             users
-              .filter(({ id }) => id !== currentUserId)
+              .filter(({ uuid }) => uuid !== currentUsr?.uuid)
               .map((props) => (
                 <UserItem
                   {...props}
-                  key={props.id}
+                  key={props.uuid}
                   className='mb-2 last:mb-0'
                 />
               ))

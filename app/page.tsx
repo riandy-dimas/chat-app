@@ -1,7 +1,6 @@
 import ChatBox from '@/components/chat-box'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
-
 export default function Home() {
   return (
     <TooltipProvider>

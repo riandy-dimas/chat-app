@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { useEffect, useState } from 'react'
 import { Message } from '../types'
 import { useChannelStore, useUserStore } from './store'
@@ -24,11 +19,6 @@ const formSchema = z.object({
     message: 'Message must be at least 2 characters.',
   }),
 })
-
-
-
-
-
 
 const MessageList = () => {
   const [messages, setMessages] = useState<Message[]>([])

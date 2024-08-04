@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react'
 import { Message } from '../types'
 import { useChannelStore, useUserStore } from './store'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
-import { SendHorizontal } from 'lucide-react'
 import ChatBubble from '../chat-bubble'
-import { Button } from '../ui/button'
 import { Textarea } from '../ui/textarea'
 import { v7 } from 'uuid'
 import { z } from 'zod'
@@ -55,7 +53,7 @@ const MessageList = () => {
   }, [channel, setChannel])
 
   return (
-    <div className="grid h-dvh grid-rows-[1fr_0.25fr] gap-2 bg-blue-200 p-3 sm:h-[700px]">
+    <div className="grid h-dvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 sm:h-[700px]">
       <ScrollArea className="flex flex-col gap-3 overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
         {messages.map(
           ({ id: msgId, message, timestamp, email, name, userId }) => {
@@ -83,15 +81,28 @@ const MessageList = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea placeholder="Type your message..." {...field} />
+                  <Textarea
+                    {...field}
+                    className="resize-none"
+                    placeholder="Type your message..."
+                    onKeyDown={(e) => {
+                      if (e.code === 'Enter') {
+                        if (e.shiftKey) return
+                        form.handleSubmit((e) => {
+                          onSubmit(e)
+                        })()
+                        e.preventDefault()
+                      }
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
           />
-          <Button className="hover:shadow-sm active:shadow-inner" type="submit">
+          {/* <Button className="hover:shadow-sm active:shadow-inner" type="submit">
             Send
             <SendHorizontal className="ml-2 h-4 w-4" />
-          </Button>
+          </Button> */}
         </form>
       </Form>
     </div>

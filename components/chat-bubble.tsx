@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { cn, getInitials } from '@/lib/utils'
-import { format, formatDistanceToNow, differenceInMinutes } from 'date-fns'
+import { format } from 'date-fns'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 type ChatBubbleProps = {
@@ -39,7 +39,7 @@ const ChatBubble = ({
               : 'rounded-bl-none'
           )}
         >
-          <p className="text-sm">{message}</p>
+          <p className="whitespace-pre-line text-sm">{message}</p>
         </div>
         <div
           className={cn('flex items-center gap-1', self && 'flex-row-reverse')}
@@ -63,9 +63,7 @@ const ChatBubble = ({
             )}
           </Tooltip>
           <p className="text-xs font-thin text-muted-foreground">
-            {differenceInMinutes(new Date(), timestamp) <= 5
-              ? formatDistanceToNow(timestamp, { addSuffix: true })
-              : format(timestamp, 'HH:mm')}
+            {format(timestamp, 'HH:mm')}
           </p>
         </div>
       </div>

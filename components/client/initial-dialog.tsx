@@ -57,7 +57,7 @@ export default function InitialDialog() {
   return (
     <Form {...form}>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className="sm:max-w-[425px]">
+        <AlertDialogContent className="rounded-sm bg-slate-50 sm:max-w-[425px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Let&apos;s chat!</AlertDialogTitle>
             <AlertDialogDescription>
@@ -73,7 +73,12 @@ export default function InitialDialog() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input autoFocus placeholder="Your name" {...field} />
+                    <Input
+                      className="bg-white"
+                      autoFocus
+                      placeholder="Your name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-right font-light" />
                 </FormItem>
@@ -86,7 +91,11 @@ export default function InitialDialog() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="your.name@email.com" {...field} />
+                    <Input
+                      className="bg-white"
+                      placeholder="your.name@email.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-right font-light" />
                 </FormItem>

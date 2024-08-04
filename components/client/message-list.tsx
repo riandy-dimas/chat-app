@@ -55,8 +55,8 @@ const MessageList = () => {
   }, [channel, setChannel])
 
   return (
-    <div className="grid h-[700px] grid-rows-[1fr_0.25fr] gap-2 bg-blue-200 p-3">
-      <ScrollArea className="flex flex-col gap-3 overflow-auto rounded-md border bg-blue-100 p-4 shadow-inner">
+    <div className="grid h-dvh grid-rows-[1fr_0.25fr] gap-2 bg-blue-200 p-3 sm:h-[700px]">
+      <ScrollArea className="flex flex-col gap-3 overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
         {messages.map(
           ({ id: msgId, message, timestamp, email, name, userId }) => {
             return (

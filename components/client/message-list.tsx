@@ -54,22 +54,24 @@ const MessageList = () => {
 
   return (
     <div className="grid h-dvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 pt-[4.5rem] sm:h-full sm:pt-3">
-      <ScrollArea className="flex flex-col gap-3 overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
-        {messages.map(
-          ({ id: msgId, message, timestamp, email, name, userId }) => {
-            return (
-              <ChatBubble
-                key={msgId}
-                message={message}
-                timestamp={timestamp}
-                name={name}
-                self={userId === currentUsr?.uuid}
-                img={`https://i.pravatar.cc/60?u=${email}`}
-              />
-            )
-          }
-        )}
-      </ScrollArea>
+      <div className="flex h-[664px] overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
+        <ScrollArea className="flex h-full flex-col gap-3">
+          {messages.map(
+            ({ id: msgId, message, timestamp, email, name, userId }) => {
+              return (
+                <ChatBubble
+                  key={msgId}
+                  message={message}
+                  timestamp={timestamp}
+                  name={name}
+                  self={userId === currentUsr?.uuid}
+                  img={`https://i.pravatar.cc/60?u=${email}`}
+                />
+              )
+            }
+          )}
+        </ScrollArea>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

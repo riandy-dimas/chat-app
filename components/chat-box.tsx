@@ -8,7 +8,7 @@ const ChatBox = () => {
     <>
       <ResizablePanelGroup
         direction="horizontal"
-        className="h-dvh max-w-3xl border-solid border-blue-700 sm:h-full sm:rounded-lg sm:border-2"
+        className="h-lvh max-w-3xl border-solid border-blue-700 sm:h-full sm:rounded-lg sm:border-2"
       >
         <UserList />
         <ResizablePanel defaultSize={65} order={2}>

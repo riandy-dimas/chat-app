@@ -94,6 +94,7 @@ export default function InitialDialog() {
                     <Input
                       className="bg-white"
                       placeholder="your.name@email.com"
+                      type="email"
                       {...field}
                     />
                   </FormControl>

@@ -53,7 +53,7 @@ const MessageList = () => {
   }, [channel, setChannel])
 
   return (
-    <div className="grid h-dvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 pt-[4.5rem] sm:h-full sm:pt-3">
+    <div className="grid h-lvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 pt-[4.5rem] sm:h-full sm:pt-3">
       <div className="flex h-[664px] overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
         <ScrollArea className="flex h-full w-full flex-col gap-3">
           {messages.map(
@@ -75,7 +75,7 @@ const MessageList = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex w-full flex-col gap-2"
+          className="absolute bottom-0 left-0 right-0 mx-3 flex-col sm:flex"
         >
           <FormField
             control={form.control}
@@ -86,6 +86,7 @@ const MessageList = () => {
                   <Input
                     {...field}
                     enterKeyHint="send"
+                    autoComplete="off"
                     className="resize-none bg-slate-50"
                     placeholder="Type your message.."
                     onKeyDown={(e) => {

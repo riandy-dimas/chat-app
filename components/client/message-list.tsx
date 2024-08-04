@@ -6,11 +6,11 @@ import { Message } from '../types'
 import { useChannelStore, useUserStore } from './store'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import ChatBubble from '../chat-bubble'
-import { Textarea } from '../ui/textarea'
 import { v7 } from 'uuid'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Input } from '../ui/input'
 
 const formSchema = z.object({
   message: z.string().min(2, {
@@ -53,7 +53,7 @@ const MessageList = () => {
   }, [channel, setChannel])
 
   return (
-    <div className="grid h-dvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 sm:h-[700px]">
+    <div className="grid h-dvh grid-rows-[1fr_0fr] gap-2 bg-blue-200 p-3 pt-[4.5rem] sm:h-[700px] sm:pt-3">
       <ScrollArea className="flex flex-col gap-3 overflow-auto rounded-md border-none bg-blue-100 p-4 shadow-inner sm:border">
         {messages.map(
           ({ id: msgId, message, timestamp, email, name, userId }) => {
@@ -81,10 +81,11 @@ const MessageList = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea
+                  <Input
                     {...field}
-                    className="resize-none"
-                    placeholder="Type your message..."
+                    enterKeyHint="send"
+                    className="resize-none bg-slate-50"
+                    placeholder="Type your message.."
                     onKeyDown={(e) => {
                       if (e.code === 'Enter') {
                         if (e.shiftKey) return
@@ -99,10 +100,6 @@ const MessageList = () => {
               </FormItem>
             )}
           />
-          {/* <Button className="hover:shadow-sm active:shadow-inner" type="submit">
-            Send
-            <SendHorizontal className="ml-2 h-4 w-4" />
-          </Button> */}
         </form>
       </Form>
     </div>
